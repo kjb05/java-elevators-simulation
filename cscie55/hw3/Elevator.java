@@ -78,8 +78,8 @@ public class Elevator
      */
     public Elevator(int elevatorNumber)
     {
-    	// At the beginning of the simulation the elevator is empty
-    	this.status = ElevatorStatus.EMPTY;
+        // At the beginning of the simulation the elevator is empty
+        this.status = ElevatorStatus.EMPTY;
 
         // Indicates the elevator number
         this.elevatorNumber = elevatorNumber;
