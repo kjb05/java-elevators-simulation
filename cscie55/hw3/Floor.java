@@ -39,14 +39,14 @@ public class Floor
      */
     public static final int INITIAL_PASSENGERS_RESIDING = 7;
 
-	//-------------------------------------------------------------------------
-	// ATTRIBUTES
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    // ATTRIBUTES
+    //-------------------------------------------------------------------------
 
-	/**
-	 * The number of this floor in the building.
-	 */
-	private int floorNumber;
+    /**
+     * The number of this floor in the building.
+     */
+    private int floorNumber;
 
     /**
      * Poisson variable used to simulate the number of passengers residing who
@@ -83,8 +83,8 @@ public class Floor
 
 
     //-------------------------------------------------------------------------
-	// CONSTRUCTOR
-	//-------------------------------------------------------------------------
+    // CONSTRUCTOR
+    //-------------------------------------------------------------------------
 
     /**
      * Creates the Floor object with passengers destined to random floors.
@@ -115,9 +115,9 @@ public class Floor
         this.generateArrivalsAtThisSecond();
     }
 
-	//-------------------------------------------------------------------------
-	// PUBLIC METHODS
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    // PUBLIC METHODS
+    //-------------------------------------------------------------------------
 
     /**
      * Defines the passengers residing that decide to leave at this second
@@ -156,7 +156,7 @@ public class Floor
         // passengers residing on the floor.
         numberOfPassengers =
                 (numberOfPassengers > this.passengersResiding.size())?
-                this.passengersResiding.size():numberOfPassengers;
+                        this.passengersResiding.size():numberOfPassengers;
 
         // Second, calculate the probability that passengers are heading up
         // or down assuming a Uniform Distribution among the floors.
@@ -191,38 +191,38 @@ public class Floor
                 System.getProperty("line.separator"));
     }
 
-	/**
-	 * Unload the elevator's passengers who are destined for this floor, then
+    /**
+     * Unload the elevator's passengers who are destined for this floor, then
      * loads its waiting passengers who are heading towards the same direction
      * onto the elevator. Writes messages accordingly.
-	 * @param elevator The Elevator object to unload and load passengers to
-	 */
-	public void unloadPassengers(Elevator elevator)
-	{
-		// Adds an "s" at the end of the word "passenger" in case there is more
-		// than 1 passenger
-		String ending = (elevator.countPassengersOnboard() == 1)?"":"s";
+     * @param elevator The Elevator object to unload and load passengers to
+     */
+    public void unloadPassengers(Elevator elevator)
+    {
+        // Adds an "s" at the end of the word "passenger" in case there is more
+        // than 1 passenger
+        String ending = (elevator.countPassengersOnboard() == 1)?"":"s";
 
-		// Says how many passengers are there on board
-		System.out.println("Currently " + elevator.countPassengersOnboard() +
+        // Says how many passengers are there on board
+        System.out.println("Currently " + elevator.countPassengersOnboard() +
                 " passenger" + ending + " on board.");
 
-		// Gets the number of people inside the elevator that are going to be
-		// unloaded.
-		int passengersUnloading = elevator.countPassengersDestined();
+        // Gets the number of people inside the elevator that are going to be
+        // unloaded.
+        int passengersUnloading = elevator.countPassengersDestined();
 
-		// Unloads passengers destined for this floor in case there are.
-		if (passengersUnloading > 0) 
-		{
-			// Adds an "s" at the end of the string if there is more than 1
-			// passenger
-			String wordEnding = (passengersUnloading == 1)?"":"s";
+        // Unloads passengers destined for this floor in case there are.
+        if (passengersUnloading > 0)
+        {
+            // Adds an "s" at the end of the string if there is more than 1
+            // passenger
+            String wordEnding = (passengersUnloading == 1)?"":"s";
 
-			// Prints a message saying how many passengers it is unloading
-			System.out.println("Unloading " + passengersUnloading + " passenger" +
+            // Prints a message saying how many passengers it is unloading
+            System.out.println("Unloading " + passengersUnloading + " passenger" +
                     wordEnding+"...");
 
-			// Takes all passengers on board and adds them to the floor's
+            // Takes all passengers on board and adds them to the floor's
             // passengersResiding ArrayList.
 
             List<Passenger> passengersDestined =
@@ -235,67 +235,67 @@ public class Floor
 
                 this.passengersResiding.add(passenger);
             }
-		}
+        }
 
-		// Gets the number of passengers that need to be loaded, including the
+        // Gets the number of passengers that need to be loaded, including the
         // ones that the elevator won't be able to carry.
         int passengersToLoad = elevator.countPassengersToLoad();
 
-		if(passengersToLoad > 0)
-		{
-			// Adds an "s" at the end of the string if there is more than 1
-			// passenger
-			String wordEnding = (passengersToLoad == 1)?"":"s";
+        if(passengersToLoad > 0)
+        {
+            // Adds an "s" at the end of the string if there is more than 1
+            // passenger
+            String wordEnding = (passengersToLoad == 1)?"":"s";
 
-			// Prints a message saying how many passengers it is loading
-			System.out.println("Loading " + passengersToLoad + " passenger" +
+            // Prints a message saying how many passengers it is loading
+            System.out.println("Loading " + passengersToLoad + " passenger" +
                     wordEnding+"...");
 
-			// Copies the number of passengers that need to be carried, in
-			// order to leave the number of passengers that will be left behind.
-			int tryingToLoad = passengersToLoad;
+            // Copies the number of passengers that need to be carried, in
+            // order to leave the number of passengers that will be left behind.
+            int tryingToLoad = passengersToLoad;
 
-			// Boards each of the passengers waiting on current floor
-			for (int i = 0; i < tryingToLoad; i++) 
-			{
-				try
-				{
-				    // Boards a passenger onto the elevator
-					elevator.boardPassenger(this.floorNumber);
+            // Boards each of the passengers waiting on current floor
+            for (int i = 0; i < tryingToLoad; i++)
+            {
+                try
+                {
+                    // Boards a passenger onto the elevator
+                    elevator.boardPassenger(this.floorNumber);
 
                     // One less passenger to load. This number is kept for
                     // diagnostic purposes (to show the appropriate
                     // ElevatorFullException message in case it is thrown).
                     passengersToLoad--;
-				}
-				catch (ElevatorFullException efe)
-				{
-					// Sets the number of people actually loaded, for diagnostic
-					// purposes
-					efe.setActuallyLoaded(tryingToLoad - passengersToLoad);
+                }
+                catch (ElevatorFullException efe)
+                {
+                    // Sets the number of people actually loaded, for diagnostic
+                    // purposes
+                    efe.setActuallyLoaded(tryingToLoad - passengersToLoad);
 
-					// Sets the number of people who were left behind, for
-					// diagnostic purposes
-					efe.setLeftBehind(passengersToLoad);
+                    // Sets the number of people who were left behind, for
+                    // diagnostic purposes
+                    efe.setLeftBehind(passengersToLoad);
 
-					// Prints the exception's message
-					System.out.println(efe);
+                    // Prints the exception's message
+                    System.out.println(efe);
 
-					break;
-				}
-			}
-		}
+                    break;
+                }
+            }
+        }
 
-	}
+    }
 
-	/**
-	 * Returns the number of passengers waiting on this floor for UP service.
-	 * @return int Number of passengers on this floor waiting for UP service.
-	 */
-	public int countPassengersDestinedUp()
-	{
-		return this.passengersDestinedUp.size();
-	}
+    /**
+     * Returns the number of passengers waiting on this floor for UP service.
+     * @return int Number of passengers on this floor waiting for UP service.
+     */
+    public int countPassengersDestinedUp()
+    {
+        return this.passengersDestinedUp.size();
+    }
 
     /**
      * Returns the number of passengers waiting on this floor for DOWN service.
@@ -451,23 +451,23 @@ public class Floor
     }
 
 
-	/**
-	 * Returns a String summarizing the pertinent values of the floor.
-	 * @return String The message to be written on the standard output.
-	 */
-	public String toString()
-	{
+    /**
+     * Returns a String summarizing the pertinent values of the floor.
+     * @return String The message to be written on the standard output.
+     */
+    public String toString()
+    {
         // Gets the size of each collection
         int passengersResiding = this.passengersResiding.size();
         int passengersDestinedUp = this.passengersDestinedUp.size();
         int passengersDestinedDown = this.passengersDestinedDown.size();
 
-		// Adds an "s" at the end of the word "passenger" in case there is more
-		// than 1 passenger destined up or down or residing.
+        // Adds an "s" at the end of the word "passenger" in case there is more
+        // than 1 passenger destined up or down or residing.
         String wordEndingResiding = (passengersDestinedDown == 1)?
                 " residing (no destination): ":
                 "s residing (no destination): ";
-		String wordEndingUp = (passengersDestinedUp == 1)?
+        String wordEndingUp = (passengersDestinedUp == 1)?
                 " waiting for UP service: ":"s waiting for UP service: ";
         String wordEndingDown = (passengersDestinedDown == 1)?
                 " waiting for DOWN service: ":"s waiting for DOWN service: ";
@@ -498,9 +498,9 @@ public class Floor
         msg += this.listPassengers(passengersDestinedDown, wordEndingDown,
                 iteratorDown);
 
-		// Returns the message
-		return msg;
-	}
+        // Returns the message
+        return msg;
+    }
 
     //-------------------------------------------------------------------------
     // PRIVATE HELPER METHODS
@@ -636,5 +636,4 @@ public class Floor
 
         return msg;
     }
-
 }

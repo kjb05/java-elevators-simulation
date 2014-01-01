@@ -8,6 +8,7 @@
  * @since September 23, 2013
  */
 
+
 package cscie55.hw3;
 
 import cscie55.hw3.exceptions.ElevatorFullException;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 
 /**
  * The Elevator class simulates an elevator for a multi-story building.
@@ -38,7 +40,7 @@ public class Elevator
      * String attribute that defines the elevator's availability. </br>
      * status E {EMPTY, AVAILABLE, FULL}
      * @see ElevatorStatus
-     */ 
+     */
     private ElevatorStatus status;
 
     /**
@@ -60,7 +62,7 @@ public class Elevator
      */
     private int currentFloor;
 
-    /** 
+    /**
      * Map that contains the passengers destined for each floor. </br>
      * The first parameter indicates the destined floor number.
      * 0 <= floorNumber < Elevator.NUMBER_OF_FLOORS </br>
@@ -84,15 +86,15 @@ public class Elevator
         // Indicates the elevator number
         this.elevatorNumber = elevatorNumber;
 
-  	// The elevator is standing on the first floor
-	this.currentFloor = 0;
+        // The elevator is standing on the first floor
+        this.currentFloor = 0;
 
-	// It is going to move UP
-	this.currentDirection = ElevatorDirection.UP;
+        // It is going to move UP
+        this.currentDirection = ElevatorDirection.UP;
 
-	// Instantiates the passengersOnboard HashMap
+        // Instantiates the passengersOnboard HashMap
         this.passengersOnboard = new HashMap<Integer, Passenger>(CAPACITY);
-    }	
+    }
 
     //-------------------------------------------------------------------------
     // PUBLIC METHODS
@@ -174,18 +176,18 @@ public class Elevator
      */
     public String toString()
     {
-	// Adds an "s" at the end of the word "passenger" in case there is
-	// more than 1 passenger
-	String wordEnding = (this.countPassengersOnboard() == 1)?"":"s";
+        // Adds an "s" at the end of the word "passenger" in case there is
+        // more than 1 passenger
+        String wordEnding = (this.countPassengersOnboard() == 1)?"":"s";
 
-	String msg = "Standing on floor: " + (this.currentFloor+1) +
-            System.getProperty("line.separator");
-            msg += "Passenger" + wordEnding + " on board: " +
-            this.countPassengersOnboard() +
-            System.getProperty("line.separator");
+        String msg = "Standing on floor: " + (this.currentFloor+1) +
+                System.getProperty("line.separator");
+        msg += "Passenger" + wordEnding + " on board: " +
+                this.countPassengersOnboard() +
+                System.getProperty("line.separator");
 
-	// Returns the message
-	return msg;
+        // Returns the message
+        return msg;
     }
 
     /**
@@ -223,6 +225,7 @@ public class Elevator
         }
 
         return count;
+
     }
 
 
@@ -257,10 +260,10 @@ public class Elevator
      */
     public void boardPassenger(int floor) throws ElevatorFullException
     {
-        // Checks if the elevator can handle one more passenger 
-	if(this.status.equals(ElevatorStatus.AVAILABLE) ||
-            this.status.equals(ElevatorStatus.EMPTY))
-	{
+        // Checks if the elevator can handle one more passenger
+        if(this.status.equals(ElevatorStatus.AVAILABLE) ||
+                this.status.equals(ElevatorStatus.EMPTY))
+        {
             Floor currentFloor = Building.floors.get(this.currentFloor);
             Passenger passenger = new Passenger(floor);
 
@@ -293,11 +296,11 @@ public class Elevator
                 // AVAILABLE
                 this.updateElevatorStatus();
             }
-	}
-	else // If capacity is full throws an exception
-	{
-	    throw new ElevatorFullException();
-	}
+        }
+        else // If capacity is full throws an exception
+        {
+            throw new ElevatorFullException();
+        }
     }
 
     /**
