@@ -8,7 +8,6 @@
  * @since September 23, 2013
  */
 
-
 package cscie55.hw3;
 
 import cscie55.hw3.exceptions.ElevatorFullException;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 /**
  * The Elevator class simulates an elevator for a multi-story building.
@@ -32,16 +30,16 @@ public class Elevator
      */
     public static int CAPACITY = 7;
 
-	//-------------------------------------------------------------------------
-	// ATTRIBUTES
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    // ATTRIBUTES
+    //-------------------------------------------------------------------------
 
-	/**
-	 * String attribute that defines the elevator's availability. </br>
-	 * status E {EMPTY, AVAILABLE, FULL}
+    /**
+     * String attribute that defines the elevator's availability. </br>
+     * status E {EMPTY, AVAILABLE, FULL}
      * @see ElevatorStatus
-	 */ 
-	private ElevatorStatus status;
+     */ 
+    private ElevatorStatus status;
 
     /**
      * Number of the elevator in the building. This variable is used to
@@ -56,49 +54,49 @@ public class Elevator
      */
     private ElevatorDirection currentDirection;
 
-	/**
-	 * Current floor on which the elevator is standing. </br>
-	 * 0 <= floor < NUMBER_OF_FLOORS
-	 */
-	private int currentFloor;
+    /**
+     * Current floor on which the elevator is standing. </br>
+     * 0 <= floor < NUMBER_OF_FLOORS
+     */
+    private int currentFloor;
 
-	/** 
-	 * Map that contains the passengers destined for each floor. </br>
+    /** 
+     * Map that contains the passengers destined for each floor. </br>
      * The first parameter indicates the destined floor number.
      * 0 <= floorNumber < Elevator.NUMBER_OF_FLOORS </br>
      * The second parameter contains the actual Passenger object.
-	 */
-	private Map<Integer, Passenger> passengersOnboard;
+     */
+    private Map<Integer, Passenger> passengersOnboard;
 
 
-	//-------------------------------------------------------------------------
-	// CONSTRUCTORS
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    // CONSTRUCTORS
+    //-------------------------------------------------------------------------
 
-	/**
-	 * Initializes each instance attribute to its corresponding value.
-	 */
-	public Elevator(int elevatorNumber)
-	{
-		// At the beginning of the simulation the elevator is empty
-		this.status = ElevatorStatus.EMPTY;
+    /**
+     * Initializes each instance attribute to its corresponding value.
+     */
+    public Elevator(int elevatorNumber)
+    {
+    	// At the beginning of the simulation the elevator is empty
+    	this.status = ElevatorStatus.EMPTY;
 
         // Indicates the elevator number
         this.elevatorNumber = elevatorNumber;
 
-		// The elevator is standing on the first floor
-		this.currentFloor = 0;
+  	// The elevator is standing on the first floor
+	this.currentFloor = 0;
 
-		// It is going to move UP
-		this.currentDirection = ElevatorDirection.UP;
+	// It is going to move UP
+	this.currentDirection = ElevatorDirection.UP;
 
-		// Instantiates the passengersOnboard HashMap
+	// Instantiates the passengersOnboard HashMap
         this.passengersOnboard = new HashMap<Integer, Passenger>(CAPACITY);
-	}	
+    }	
 
-	//-------------------------------------------------------------------------
-	// PUBLIC METHODS
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    // PUBLIC METHODS
+    //-------------------------------------------------------------------------
 
     /**
      * Moves the elevator one floor up or down after determining the right
@@ -169,26 +167,26 @@ public class Elevator
         return this.currentDirection;
     }
 
-	/**
-	 * This method returns a String summarizing the pertinent values in the
+    /**
+     * This method returns a String summarizing the pertinent values in the
      * elevator. <br>
-	 * @return String The message to be written on the standard output.
-	 */
-	public String toString()
-	{
-		// Adds an "s" at the end of the word "passenger" in case there is
-		// more than 1 passenger
-		String wordEnding = (this.countPassengersOnboard() == 1)?"":"s";
+     * @return String The message to be written on the standard output.
+     */
+    public String toString()
+    {
+	// Adds an "s" at the end of the word "passenger" in case there is
+	// more than 1 passenger
+	String wordEnding = (this.countPassengersOnboard() == 1)?"":"s";
 
-		String msg = "Standing on floor: " + (this.currentFloor+1) +
-                System.getProperty("line.separator");
-		msg += "Passenger" + wordEnding + " on board: " +
-                this.countPassengersOnboard() +
-                System.getProperty("line.separator");
+	String msg = "Standing on floor: " + (this.currentFloor+1) +
+            System.getProperty("line.separator");
+            msg += "Passenger" + wordEnding + " on board: " +
+            this.countPassengersOnboard() +
+            System.getProperty("line.separator");
 
-		// Returns the message
-		return msg;
-	}
+	// Returns the message
+	return msg;
+    }
 
     /**
      * Determines whether to stop on this floor by checking if there is a
@@ -225,7 +223,6 @@ public class Elevator
         }
 
         return count;
-
     }
 
 
@@ -249,21 +246,21 @@ public class Elevator
         currentFloorObject.unloadPassengers(this);
     }
 
-	/**
-	 * Boards one more passenger on current floor destined for the floor
+    /**
+     * Boards one more passenger on current floor destined for the floor
      * specified in its parameter. </br>
-	 * If capacity is FULL throws and exception indicating it and doesn't boards
+     * If capacity is FULL throws and exception indicating it and doesn't boards
      * the passenger. </br>
-	 * @param floor The number of the floor to where the passenger is destined.
-	 * @throws ElevatorFullException Exception to be thrown if it tries to load
+     * @param floor The number of the floor to where the passenger is destined.
+     * @throws ElevatorFullException Exception to be thrown if it tries to load
      * one more passenger into the Elevator but it is full.
-	 */
-	public void boardPassenger(int floor) throws ElevatorFullException
+     */
+    public void boardPassenger(int floor) throws ElevatorFullException
+    {
+        // Checks if the elevator can handle one more passenger 
+	if(this.status.equals(ElevatorStatus.AVAILABLE) ||
+            this.status.equals(ElevatorStatus.EMPTY))
 	{
-		// Checks if the elevator can handle one more passenger 
-		if(this.status.equals(ElevatorStatus.AVAILABLE) ||
-                this.status.equals(ElevatorStatus.EMPTY))
-		{
             Floor currentFloor = Building.floors.get(this.currentFloor);
             Passenger passenger = new Passenger(floor);
 
@@ -296,21 +293,21 @@ public class Elevator
                 // AVAILABLE
                 this.updateElevatorStatus();
             }
-		}
-		else // If capacity is full throws an exception
-		{
-			throw new ElevatorFullException();
-		}
 	}
-
-	/**
-	 * Gets the value of the currentFloor attribute
-	 * @return The number of the current floor
-	 */
-	public int getCurrentFloor()
+	else // If capacity is full throws an exception
 	{
-		return this.currentFloor;
+	    throw new ElevatorFullException();
 	}
+    }
+
+    /**
+     * Gets the value of the currentFloor attribute
+     * @return The number of the current floor
+     */
+    public int getCurrentFloor()
+    {
+        return this.currentFloor;
+    }
 
     /**
      * Sets the current direction of the elevator to the value specified in
@@ -388,9 +385,9 @@ public class Elevator
     }
 
 
-	//-------------------------------------------------------------------------
-	// PRIVATE HELPER METHODS
-	//-------------------------------------------------------------------------
+    //-------------------------------------------------------------------------
+    // PRIVATE HELPER METHODS
+    //-------------------------------------------------------------------------
 
     /**
      * Returns the number of people from upper floors who are heading upwards.
@@ -415,12 +412,12 @@ public class Elevator
         return count;
     }
 
-	/**
-	 * Sets the elevator status to EMPTY, FULL or AVAILABLE according to the
+    /**
+     * Sets the elevator status to EMPTY, FULL or AVAILABLE according to the
      * number of passengers on board.
-	 */
-	private void updateElevatorStatus()
-	{
+     */
+    private void updateElevatorStatus()
+    {
         int passengersOnboard = this.countPassengersOnboard();
 
         if(passengersOnboard == 0)
@@ -435,6 +432,5 @@ public class Elevator
         {
             this.status = ElevatorStatus.AVAILABLE;
         }
-	}
-
+    }
 }
